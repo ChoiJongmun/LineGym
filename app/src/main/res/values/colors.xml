@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="green">#8FCC85</color>
+    <color name="blue">#ff33b5e5</color>
+    <color name="white">#ffffff</color>
+
+    <color name="chart_xl_color">#323338</color>
+    <color name="month_attend_btn_color">#41BCFF</color>
+    <color name="day_attend_btn_color">#9447b3</color>
+    <color name="default_attend_btn_color">#999999</color>
+</resources>

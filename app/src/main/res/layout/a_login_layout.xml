@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:background="#ffffff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#323338"
+        android:text="로그인"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/background_corner_round_white">
+        <EditText
+            android:id="@+id/edt_mem_name"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@drawable/background_edt_view"
+            android:paddingLeft="15dp"
+            android:hint="이름"
+            android:textSize="15dp"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@android:color/black"
+            android:textColor="#000000"
+            android:textColorHint="#999999"/>
+        <EditText
+            android:id="@+id/edt_mem_phone_no"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:inputType="phone"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@android:color/black"
+            android:background="@drawable/background_edt_view"
+            android:textColor="#000000"
+            android:hint="전화번호(-없이 입력)"
+            android:textColorHint="#999999"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#313237"
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        android:text="로그인"/>
+    
+    <CheckBox
+        android:id="@+id/cb_auto_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:button="@drawable/selector_check_box_drawable"
+        android:textSize="15dp"
+        android:textColor="#313237"
+        android:text="자동로그인"/>
+</LinearLayout>

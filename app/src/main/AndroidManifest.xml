@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="health.linegym.com.linegym">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />	<!-- 파일 저장 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo_top"
+        android:label="@string/app_name"
+        android:name=".LineGymApplication"
+        android:theme="@style/AppTheme">
+        <activity android:name=".LineGymIntro"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name=".ATermAgreeActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".ALoginActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".attend.AMonthAttend"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".inbody.ADetailInbodyInfo"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".inbody.AInbodyBodyPoint"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".inbody.AInbodyBodyWater"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".inbody.AInbodyMuscleFIt"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".inbody.AInbodyWeightControl"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".inbody.ALastInbodyData"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".inbody.ALastInbodyGraph"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".AMyInfoActivity"
+            android:screenOrientation="portrait"></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LineGym</string>
+    <string name="title_attend_day">이번달 내 출석 일수는?</string>
+    <string name="title_body_point">지난 내 <![CDATA[<font color=#FF0000>인바디</font>]]>점수는?</string>
+</resources>
