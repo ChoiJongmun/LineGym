@@ -2,11 +2,8 @@ package health.linegym.com.linegym.attend;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.FloatRange;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -33,12 +30,10 @@ import com.google.gson.GsonBuilder;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import health.linegym.com.linegym.BaseLineGymActivity;
 import health.linegym.com.linegym.R;
@@ -66,7 +61,8 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
     private TextView mPerMonthTv, mPerDayTv;
     private TextView mCurrnentMonthAttendCount;
     private View     mPerMonthUnder, mPerDayUnder;
-
+    private String  mCurrentDate;
+    private HashMap<String,AttendDay> mAttendDayMap = new HashMap<>();
     float spaceForBar = 10f;
     MemberInfo mMyInfo;
     MainData mMainData;
@@ -106,13 +102,12 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
         mPerDayUnder.setBackgroundColor(getResources().getColor(R.color.day_attend_btn_color));
 
         Calendar cal = Calendar.getInstance();
-
+        mCurrentDate = Integer.toString(cal.get(Calendar.YEAR)) + Integer.toString(cal.get(Calendar.MONTH)+1);
         getAttendDay(Integer.toString(cal.get(Calendar.YEAR)), Integer.toString(cal.get(Calendar.MONTH)+1));
         getAttendMonth(Integer.toString(cal.get(Calendar.YEAR)));
     }
 
     private void setCalendarData() {
-        final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         // Setup caldroid fragment
         // **** If you want normal CaldroidFragment, use below line ****
@@ -125,7 +120,7 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
         args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
         args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-        args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
+        args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
 
         // Uncomment this to customize startDayOfWeek
         // args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
@@ -152,13 +147,26 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
 
             @Override
             public void onChangeMonth(int month, int year) {
-                String text = "month: " + month + " year: " + year;
+
+                AttendDay currentMonth = mAttendDayMap.get(String.format("%d%d",year,month));
+                if(currentMonth != null) {
+                    mCurrnentMonthAttendCount.setText(Integer.toString(currentMonth.getRows().size()));
+                }
                 if(month == 1) {
                     month = 12;
+                    mCurrentDate = String.format("%d%d", year-1,month);
                     getAttendDay(Integer.toString(year-1), Integer.toString(month));
                 }else {
+                    mCurrentDate = String.format("%d%d", year,month-1);
                     getAttendDay(Integer.toString(year), Integer.toString(month-1));
                 }
+
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+
+//                    }
+//                });
             }
 
             @Override
@@ -175,7 +183,7 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
 
         // Setup Caldroid
         caldroidFragment.setCaldroidListener(listener);
-
+//        caldroidFragment.setSixWeeksInCalendar(false);
     }
 
     private void setChartData(ArrayList<String> month){
@@ -317,22 +325,9 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
             case "PER_DAY" : {
                 System.out.println("result = " + result_string);
                 Gson gson = new GsonBuilder().create();
-                AttendDay days = new AttendDay();
-                days = gson.fromJson(result_string, AttendDay.class);
-                Drawable green = getResources().getDrawable(R.drawable.btn_meeting_alarm_off);
-                if(caldroidFragment == null) {
-                    caldroidFragment = new CaldroidFragment();
-                }
-                for(String day : days.getRows()) {
-                    caldroidFragment.setBackgroundDrawableForDate(green, day);
-                    caldroidFragment.setTextColorForDate(R.color.white, day);
-                }
-
-                if(is_init == false) {
-                    setCalendarData();
-                    is_init=true;
-                }
-
+                final AttendDay days = gson.fromJson(result_string, AttendDay.class);
+                mAttendDayMap.put(mCurrentDate, days);
+                setDaysData(days);
 //                caldroidFragment.getDatePagerAdapters().get(0).notifyDataSetChanged();
 //                caldroidFragment.getDatePagerAdapters().get(caldroidFragment.getDateViewPager().getCurrentItem()).notifyDataSetChanged();
                 break;
@@ -347,6 +342,25 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
 
     @Override
     public void onException(String type, String error_message) {
+
+    }
+
+    private void setDaysData(final AttendDay days) {
+        Drawable green = getResources().getDrawable(R.drawable.btn_meeting_alarm_off);
+        if(caldroidFragment == null) {
+            caldroidFragment = new CaldroidFragment();
+        }
+
+        for(String day : days.getRows()) {
+            caldroidFragment.setBackgroundDrawableForDate(green, day);
+            caldroidFragment.setTextColorForDate(R.color.white, day);
+        }
+
+        if(is_init == false) {
+            setCalendarData();
+            is_init=true;
+        }
+
 
     }
 
@@ -379,8 +393,14 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
     }
 
     public void getAttendDay(String year, String month){
-        HttpConnector conn = new HttpConnector("PER_DAY", AMonthAttend.this);
-        conn.getAttendDays(mMyInfo.getName(), year, month);
+        if(mAttendDayMap.get(year+month) == null) {
+            HttpConnector conn = new HttpConnector("PER_DAY", AMonthAttend.this);
+            conn.getAttendDays(mMyInfo.getName(), year, month);
+        }else {
+            setDaysData(mAttendDayMap.get(year+month));
+        }
+
+
     }
 
     public void getAttendMonth(String year) {
