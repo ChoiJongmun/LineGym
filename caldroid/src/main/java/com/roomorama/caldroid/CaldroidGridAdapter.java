@@ -12,12 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.caldroid.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -247,6 +245,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
         String date = String.format("%s-%s-%s", year, month, day);
         Map<String, Drawable> backgroundForDateTimeMap = (Map<String, Drawable>) caldroidData
                 .get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
+
+        if (dateTime.getMonth() != this.month) {
+            return;
+        }
+
         if (backgroundForDateTimeMap != null) {
             // Get background resource for the dateTime
             Drawable drawable = backgroundForDateTimeMap.get(date);
