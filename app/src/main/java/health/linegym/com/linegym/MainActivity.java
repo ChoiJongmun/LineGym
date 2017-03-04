@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,12 +18,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.triggertrap.seekarc.SeekArc;
 
-import java.lang.reflect.Member;
-
 import health.linegym.com.linegym.attend.AMonthAttend;
 import health.linegym.com.linegym.http.HttpConnector;
 import health.linegym.com.linegym.http.IResultListener;
-import health.linegym.com.linegym.inbody.ADetailInbodyInfo;
+import health.linegym.com.linegym.inbody.AInbodyDetailInfo;
 import health.linegym.com.linegym.object.MainData;
 import health.linegym.com.linegym.object.MemberInfo;
 
@@ -67,7 +64,7 @@ public class MainActivity extends BaseLineGymActivity implements IResultListener
         mInbodyLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ADetailInbodyInfo.class);
+                Intent intent = new Intent(MainActivity.this, AInbodyDetailInfo.class);
                 intent.putExtra("my_info", mem_info);
                 startActivity(intent);
             }

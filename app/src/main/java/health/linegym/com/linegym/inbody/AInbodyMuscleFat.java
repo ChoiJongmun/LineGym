@@ -11,7 +11,7 @@ import health.linegym.com.linegym.R;
  * Created by innotree12 on 2016-11-04.
  */
 
-public class AInbodyMuscleFIt  extends BaseLineGymActivity {
+public class AInbodyMuscleFat extends BaseLineGymActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

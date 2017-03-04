@@ -8,10 +8,38 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/caldroid_gray"></View>
-    <ListView
-        android:id="@+id/lv_inbody_item_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="1dp"
-        android:divider="@color/caldroid_gray"></ListView>
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/lv_inbody_item_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:dividerHeight="1dp"
+            android:divider="@color/caldroid_gray"></ListView>
+        <LinearLayout
+            android:id="@+id/inbody_item_empty_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/iv_inbody_list_empty_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_con_none"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="#323338"
+                android:text="등록된 인바디 정보가 없습니다."
+                android:textSize="13sp"
+                android:layout_marginTop="35dp"/>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

@@ -1,6 +1,5 @@
 package health.linegym.com.linegym;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,9 +8,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-
-import health.linegym.com.linegym.http.HttpConnector;
 
 /**
  * Created by jongmoon on 2016-12-10.
@@ -20,6 +16,8 @@ import health.linegym.com.linegym.http.HttpConnector;
 public class ATermAgreeActivity extends BaseLineGymActivity{
 
     CheckBox mMemberCheck, mPrivateInfoCheck, mCheckAll;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +60,13 @@ public class ATermAgreeActivity extends BaseLineGymActivity{
                         dlg.show();
                     }
                 }
+            }
+        });
+
+        findViewById(R.id.btn_term_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.exit(0);
             }
         });
     }
