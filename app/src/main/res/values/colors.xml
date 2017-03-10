@@ -10,6 +10,6 @@
 
     <color name="chart_xl_color">#323338</color>
     <color name="month_attend_btn_color">#41BCFF</color>
-    <color name="day_attend_btn_color">#9447b3</color>
+    <color name="day_attend_btn_color">#5586EB</color>
     <color name="default_attend_btn_color">#999999</color>
 </resources>

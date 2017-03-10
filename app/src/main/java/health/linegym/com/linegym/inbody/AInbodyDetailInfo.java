@@ -8,10 +8,15 @@ import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.renderer.XAxisRenderer;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 
@@ -26,7 +31,7 @@ import health.linegym.com.linegym.object.MemberInfo;
  * Created by innotree12 on 2017-02-08.
  */
 
-public class AInbodyDetailInfo extends BaseLineGymActivity implements IResultListener{
+public class AInbodyDetailInfo extends BaseLineGymActivity implements IResultListener, OnChartValueSelectedListener {
 
     private LineChart mChart;
 
@@ -41,13 +46,32 @@ public class AInbodyDetailInfo extends BaseLineGymActivity implements IResultLis
         setContentView(R.layout.a_layout_inbody_detail_graph);
         TextView title = (TextView) findViewById(R.id.tv_comm_title);
         title.setText("인바디현황");
+        findViewById(R.id.comm_title_btn_navi_back).setOnClickListener(onBaseClickListener);
         mMyInfo = (MemberInfo) getIntent().getSerializableExtra("my_info");
 
         mChart = (LineChart) findViewById(R.id.inbody_detail_info_chart);
+        mChart.setOnChartValueSelectedListener(this);
         mChart.setDrawGridBackground(false);
         mChart.getDescription().setEnabled(false);
+        mChart.setDragEnabled(true);
         mChart.setData(new LineData());
+        mChart.invalidate();
+        mChart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                String date_time =  inbody.getRows().get(inbody.getRows().size()- ((int)value)).getDatetime();
+                return date_time.substring(0,8);
+//                String year = date.substring(0, 4);
+//                String month = date.substring(4,6);
+//                String day = date.substring(6);
+//                return String.format("%s-%s-%s", year, month, day);
+            }
 
+            @Override
+            public int getDecimalDigits() {
+                return 0;
+            }
+        });
         initDataSet();
 
         HttpConnector conn = new HttpConnector("Inbody", this);
@@ -81,6 +105,7 @@ public class AInbodyDetailInfo extends BaseLineGymActivity implements IResultLis
                 mMuscleData.addEntry(new Entry((float)inbody.getRows().size()- i, Float.parseFloat(data.getMuscle())));
                 mBodyFatData.addEntry(new Entry((float)inbody.getRows().size()- i, Float.parseFloat(data.getFat())));
                 mBodyFatPerData.addEntry(new Entry((float)inbody.getRows().size()- i, Float.parseFloat(data.getFat_per())));
+
             }
 
             mWeightData.notifyDataSetChanged();
@@ -94,7 +119,11 @@ public class AInbodyDetailInfo extends BaseLineGymActivity implements IResultLis
             mChart.getData().addDataSet(mBodyFatPerData);
 
             mChart.notifyDataSetChanged();
-            mChart.invalidate();
+
+            mChart.setVisibleXRangeMaximum(3);
+
+            mChart.moveViewTo(mWeightData.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
+
         }
     };
 
@@ -138,4 +167,13 @@ public class AInbodyDetailInfo extends BaseLineGymActivity implements IResultLis
 
     }
 
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
 }

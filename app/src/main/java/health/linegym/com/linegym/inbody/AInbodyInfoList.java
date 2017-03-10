@@ -39,8 +39,6 @@ public class AInbodyInfoList extends BaseLineGymActivity implements IResultListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_detail_indoby);
 
-        findViewById(R.id.comm_title_btn_navi_back).setOnClickListener(onBaseClickListener);
-
         mMyInfo = (MemberInfo) getIntent().getSerializableExtra("my_info");
 
         TextView title = (TextView) findViewById(R.id.tv_comm_title);

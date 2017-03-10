@@ -50,6 +50,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".AMyInfoActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".AWebView"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
