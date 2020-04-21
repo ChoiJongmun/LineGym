@@ -406,6 +406,7 @@ public class AMonthAttend extends BaseLineGymActivity implements OnChartValueSel
     public void getAttendMonth(String year) {
         HttpConnector conn = new HttpConnector("PER_MONTH", AMonthAttend.this);
         conn.getAttendMonth(mMyInfo.getName());
+        System.out.println("asdfasdf")
     }
 
 }
