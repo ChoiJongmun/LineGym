@@ -145,6 +145,7 @@ public class MainActivity extends BaseLineGymActivity implements IResultListener
                         String fitness = main_data.getFitness().substring(0, main_data.getFitness().lastIndexOf("."));
                         mLastBodyPoint.setText(fitness);
                         mBodyPointSeekArc.setProgress(Integer.parseInt(fitness));
+                        System.out.println("asdfasdf")
                     }
 
                 }
