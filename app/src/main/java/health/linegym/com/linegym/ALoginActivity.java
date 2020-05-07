@@ -53,6 +53,9 @@ public class ALoginActivity extends BaseLineGymActivity implements IResultListen
                     mMemPhoneNo.setText(PhoneNumberUtils.formatNumber(phone_num)); //Deprecated method
                 }
 
+                
+                
+                
                 connector.login(mMemName.getText().toString(), mMemPhoneNo.getText().toString());
 //                startActivity(new Intent(ALoginActivity.this, MainActivity.class));
 //                finish();
