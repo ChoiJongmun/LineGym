@@ -22,6 +22,7 @@ import health.linegym.com.linegym.http.HttpConnector;
 import health.linegym.com.linegym.http.IResultListener;
 import health.linegym.com.linegym.object.MemberInfo;
 
+
 /**
  * Created by innotree12 on 2016-10-28.
  */
